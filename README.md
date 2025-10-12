@@ -44,10 +44,12 @@ dsbm/
 ## 🚀 Cara Menjalankan
 
 ### Prerequisites
+
 - Node.js (v14 atau lebih baru)
 - npm atau yarn
 
 ### Installation
+
 ```bash
 # Clone repository
 git clone https://github.com/username/dsbm.git
@@ -64,6 +66,7 @@ npm run build-css
 ```
 
 ### Development
+
 ```bash
 # Watch mode untuk perubahan CSS
 npm run build-css
@@ -75,11 +78,13 @@ npm run build
 ## 📈 Analisis Data
 
 ### Metode Perhitungan Frekuensi
+
 ```
 Frekuensi Komponen = Jumlah Perusahaan yang Menggunakan Komponen / Total Perusahaan × 100%
 ```
 
 ### Contoh
+
 - **Button**: 73/75 perusahaan = 97%
 - **Cards**: 72/75 perusahaan = 96%
 - **Modal**: 71/75 perusahaan = 95%
@@ -87,6 +92,7 @@ Frekuensi Komponen = Jumlah Perusahaan yang Menggunakan Komponen / Total Perusah
 ## 🎨 Dark Mode
 
 Project mendukung dark mode dengan:
+
 - Toggle button di pojok kanan atas
 - Perubahan tema instan tanpa delay
 - Persistent storage menggunakan localStorage
@@ -101,6 +107,7 @@ Project mendukung dark mode dengan:
 ## 🔧 Konfigurasi
 
 ### Tailwind CSS
+
 ```javascript
 // tailwind.config.js
 module.exports = {
@@ -116,6 +123,7 @@ module.exports = {
 ## 📊 Data Structure
 
 ### Perusahaan Object
+
 ```javascript
 {
   id: 1,
@@ -131,15 +139,18 @@ module.exports = {
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
+
 1. Push ke GitHub
 2. Connect ke Vercel
 3. Auto-deploy setiap push
 
 ### Netlify
+
 1. Drag & drop folder project
 2. Auto-deploy dengan custom domain
 
 ### GitHub Pages
+
 1. Push ke GitHub
 2. Enable GitHub Pages di settings
 3. Deploy dari main branch
@@ -159,6 +170,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## 👨‍💻 Author
 
 **Maulana Bayu**
+
 - GitHub: [@maulanabayu](https://github.com/maulanabayu)
 
 ## 🙏 Acknowledgments
