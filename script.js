@@ -2669,10 +2669,20 @@ function initializeApp() {
 
 // Render tabel perusahaan
 function renderCompanyTable() {
+  console.log("renderCompanyTable called");
   const tbody = document.getElementById("companyTableBody");
+  console.log("tbody element:", tbody);
+  
+  if (!tbody) {
+    console.error("companyTableBody element not found!");
+    return;
+  }
+  
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const companiesToShow = filteredCompanies.slice(startIndex, endIndex);
+  
+  console.log("Companies to show:", companiesToShow.length);
 
   tbody.innerHTML = companiesToShow
     .map(
@@ -2734,7 +2744,14 @@ function renderCompanyTable() {
 
 // Render daftar komponen
 function renderComponentList() {
+  console.log("renderComponentList called");
   const componentList = document.getElementById("componentList");
+  console.log("componentList element:", componentList);
+  
+  if (!componentList) {
+    console.error("componentList element not found!");
+    return;
+  }
 
   // Hitung frekuensi komponen
   const componentFrequency = {};
@@ -2743,6 +2760,8 @@ function renderComponentList() {
       componentFrequency[component] = (componentFrequency[component] || 0) + 1;
     });
   });
+  
+  console.log("Component frequency calculated for", Object.keys(componentFrequency).length, "components");
 
   // Sort berdasarkan frekuensi
   const sortedComponents = filteredComponents.sort((a, b) => {

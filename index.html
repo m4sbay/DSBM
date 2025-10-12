@@ -8,8 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
-        darkMode: 'class'
-      }
+        darkMode: "class",
+      };
     </script>
     <link rel="icon" class="rounded-full" href="/index.png" />
   </head>
@@ -177,6 +177,16 @@
       </div>
     </div>
 
+    <script>
+      // Test script loading
+      console.log("HTML loaded, about to load script.js");
+      window.addEventListener('error', function(e) {
+        console.error('JavaScript error:', e.error);
+      });
+    </script>
     <script src="script.js"></script>
+    <script>
+      console.log("script.js loaded");
+    </script>
   </body>
 </html>
