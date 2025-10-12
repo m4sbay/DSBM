@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSBM</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link rel="icon" class="rounded-full" href="/index.png" />
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+      <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Analisis Komponen UI</h1>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Analisis komponen design sistem dari perusahaan</p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">75 Perusahaan</div>
+            <!-- Dark Mode Toggle -->
+            <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+              <svg id="sunIcon" class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                ></path>
+              </svg>
+              <svg id="moonIcon" class="w-5 h-5 text-gray-700 dark:text-gray-300 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Sidebar Komponen -->
+        <div class="lg:col-span-1">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Komponen UI</h2>
+
+            <!-- Search Komponen -->
+            <div class="mb-4">
+              <input
+                type="text"
+                id="searchComponent"
+                placeholder="Cari komponen..."
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <!-- Filter Komponen -->
+            <div class="mb-4">
+              <select id="filterComponent" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Semua Komponen</option>
+                <option value="button">Button</option>
+                <option value="form">Form</option>
+                <option value="card">Card</option>
+                <option value="navigation">Navigation</option>
+                <option value="modal">Modal</option>
+                <option value="table">Table</option>
+              </select>
+            </div>
+
+            <!-- Daftar Komponen -->
+            <div id="componentList" class="space-y-3 rounded-lgh-full overflow-y-auto">
+              <!-- Komponen akan dimuat dari JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700">
+            <!-- Header Tabel -->
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <div class="flex justify-between items-center">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Data Perusahaan</h2>
+                <div class="flex items-center space-x-4">
+                  <!-- Search Perusahaan -->
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="searchCompany"
+                      placeholder="Cari perusahaan..."
+                      class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg class="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- Filter Perusahaan -->
+                  <select id="filterCompany" class="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Semua Perusahaan</option>
+                    <option value="tech">Teknologi</option>
+                    <option value="transportation">Transportasi</option>
+                    <option value="automotive">Otomotif</option>
+                    <option value="education">Pendidikan</option>
+                    <option value="retail">Ritel</option>
+                    <option value="realestate">Properti</option>
+                    <option value="industrial">Industri</option>
+                    <option value="government">Pemerintah</option>
+                    <option value="finance">Keuangan</option>
+                    <option value="ecommerce">E-commerce</option>
+                    <option value="healthcare">Kesehatan</option>
+                    <option value="media">Media</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabel Data -->
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">No</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nama Perusahaan</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Design System</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Komponen UI</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Jumlah Komponen</th>
+                  </tr>
+                </thead>
+                <tbody id="companyTableBody" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                  <!-- Data akan dimuat dari JavaScript -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-700 dark:text-gray-300">Menampilkan <span id="showingStart">1</span> sampai <span id="showingEnd">10</span> dari <span id="totalRecords">0</span> perusahaan</div>
+                <div class="flex items-center space-x-2">
+                  <button id="prevPage" class="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50" disabled>
+                    Sebelumnya
+                  </button>
+                  <span id="currentPage" class="px-3 py-1 bg-blue-500 text-white rounded-md text-sm">1</span>
+                  <button id="nextPage" class="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50">Selanjutnya</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Detail Perusahaan -->
+      <div id="companyModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border dark:border-gray-700 w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white dark:bg-gray-800">
+          <div class="mt-3">
+            <div class="flex justify-between items-center mb-4">
+              <h3 id="modalTitle" class="text-lg font-semibold text-gray-900 dark:text-white">Detail Perusahaan</h3>
+              <button id="closeModal" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div id="modalContent" class="text-gray-700">
+              <!-- Konten modal akan dimuat dari JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

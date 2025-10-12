@@ -1,0 +1,17 @@
+{
+  "name": "data-perusahaan",
+  "version": "1.0.0",
+  "description": "Sistem database berbasis website untuk menganalisis komponen design sistem dari 76 perusahaan menggunakan HTML dan Tailwind CSS.",
+  "main": "script.js",
+  "scripts": {
+    "build-css": "tailwindcss -i ./input.css -o ./output.css --watch",
+    "build": "tailwindcss -i ./input.css -o ./output.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
