@@ -2649,11 +2649,17 @@ let selectedComponent = null; // Komponen yang sedang dipilih
 
 // Inisialisasi aplikasi
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM loaded, initializing app...");
+  console.log("Companies data length:", companiesData.length);
+  console.log("All components length:", allComponents.length);
   initializeApp();
   initializeDarkMode();
 });
 
 function initializeApp() {
+  console.log("Initializing app...");
+  console.log("Filtered companies:", filteredCompanies.length);
+  console.log("Filtered components:", filteredComponents.length);
   renderCompanyTable();
   renderComponentList();
   setupEventListeners();
