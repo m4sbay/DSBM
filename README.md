@@ -52,7 +52,7 @@ dsbm/
 
 ```bash
 # Clone repository
-git clone https://github.com/username/dsbm.git
+git clone https://github.com/m4sbay/dsbm.git
 cd dsbm
 
 # Install dependencies
@@ -171,7 +171,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 **Maulana Bayu**
 
-- GitHub: [@maulanabayu](https://github.com/maulanabayu)
+- GitHub: [@m4sbay](https://github.com/m4sbay)
 
 ## 🙏 Acknowledgments
 
@@ -182,7 +182,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📞 Contact
 
-Project Link: [https://github.com/maulanabayu/dsbm](https://github.com/maulanabayu/dsbm)
+Project Link: [https://github.com/m4sbay/dsbm](https://github.com/m4sbay/dsbm)
 
 ---
 
