@@ -3033,8 +3033,9 @@ function exportData() {
 
 // Data creator - silakan edit sesuai kebutuhan
 const creatorData = {
-  name: "Maulana Bayu",
-  description: "Mahasiswa Teknik Informatika yang tertarik dengan UI/UX Design dan Design System. Project ini dibuat untuk menganalisis komponen UI yang paling banyak digunakan oleh perusahaan-perusahaan besar.",
+  name: "Muhammad Maulana Bayu",
+  description:
+    "Saya adalah mahasiswa Teknik Informatika di Institut Teknologi Padang yang memiliki ketertarikan pada bidang design dan development. Proyek ini dibuat sebagai bagian dari penunjang tugas akhir saya untuk menganalisis komponen antarmuka pengguna (UI) yang paling sering digunakan oleh perusahaan-perusahaan besar.",
   socialLinks: {
     linkedin: "https://www.linkedin.com/in/mmaulanabayu/",
     github: "https://github.com/m4sbay",
@@ -3081,7 +3082,7 @@ function renderCreatorProfile() {
   modalContent.innerHTML = `
     <!-- Profile Image -->
     <div class="mb-6 flex justify-center">
-      <img src="./index.png" alt="${creatorData.name}" class="w-32 h-32 rounded-full object-cover border-4 border-blue-500 dark:border-blue-400" />
+      <img src="./index.png" alt="${creatorData.name}" class="w-32 h-32 rounded-full object-cover border-2 border-blue-500 dark:border-blue-400" />
     </div>
     
     <!-- Name -->
