@@ -2584,6 +2584,7 @@ const companiesData = [
 
 // Data komponen UI yang tersedia
 const allComponents = [
+  "Accordion",
   "Action bar",
   "Action button",
   "Action list",
@@ -2640,39 +2641,73 @@ const allComponents = [
   "Tree view",
 ];
 
+const componentCategories = [
+  {
+    id: "actions",
+    label: "Aksi & kontrol",
+    components: ["Action bar", "Action button", "Action list", "Button", "Button group", "Segmented control", "Slider", "Switch"],
+  },
+  {
+    id: "forms",
+    label: "Form & input",
+    components: ["Autocomplete", "Checkbox", "Combobox", "Date picker", "Dropdown", "Filter input", "Form", "Label", "Radio button", "Search", "Select", "Text area", "Text field"],
+  },
+  {
+    id: "navigation",
+    label: "Navigasi & struktur",
+    components: ["App bar", "Breadcrumb", "Link", "Navigation bar", "Page header", "Pagination", "Sidebar", "Tabs", "Tree view"],
+  },
+  {
+    id: "overlays",
+    label: "Overlay & disclosure",
+    components: ["Accordion", "Bottom sheet", "Dialog", "Drawer", "Menus", "Modal", "Popover", "Tooltip"],
+  },
+  {
+    id: "feedback",
+    label: "Feedback & status",
+    components: ["Alert banner", "Badges", "Empty state", "Help text", "Inline message", "Progress bar", "Progress indicator", "Snackbar"],
+  },
+  {
+    id: "display",
+    label: "Konten & data display",
+    components: ["Avatar", "Cards", "Chip", "Code snippet", "Data table", "Divider", "Icon", "List", "Tag"],
+  },
+];
+
 // State aplikasi
 let currentPage = 1;
 const itemsPerPage = 45;
 let filteredCompanies = [...companiesData];
 let filteredComponents = [...allComponents];
+let componentSearchTerm = "";
+let selectedComponentCategory = "";
 let selectedComponent = null; // Komponen yang sedang dipilih
 
 // Inisialisasi aplikasi
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM loaded, initializing app...");
-  console.log("Companies data length:", companiesData.length);
-  console.log("All components length:", allComponents.length);
   initializeApp();
   initializeDarkMode();
 });
 
 function initializeApp() {
-  console.log("Initializing app...");
-  console.log("Filtered companies:", filteredCompanies.length);
-  console.log("Filtered components:", filteredComponents.length);
   renderCompanyTable();
   renderComponentList();
+  renderComponentCategoryControls();
+  renderKeyFindings();
+  renderBayuLens();
+  initializeCompareMode();
   setupEventListeners();
+  initializeComponentDropdown();
+  initializeIndustryDropdown();
   updatePagination();
   updateCompanyCount();
+  updateDashboardStats();
   initializeCreatorModal();
 }
 
 // Render tabel perusahaan
 function renderCompanyTable() {
-  console.log("renderCompanyTable called");
   const tbody = document.getElementById("companyTableBody");
-  console.log("tbody element:", tbody);
 
   if (!tbody) {
     console.error("companyTableBody element not found!");
@@ -2683,56 +2718,57 @@ function renderCompanyTable() {
   const endIndex = startIndex + itemsPerPage;
   const companiesToShow = filteredCompanies.slice(startIndex, endIndex);
 
-  console.log("Companies to show:", companiesToShow.length);
-
   tbody.innerHTML = companiesToShow
     .map(
       (company, index) => `
-        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer" onclick="showCompanyDetail(${company.id})">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+        <tr class="table-row" style="--row-delay: ${Math.min(index * 18, 240)}ms" onclick="showCompanyDetail(${company.id})">
+            <td class="table-cell whitespace-nowrap font-medium">
                 ${startIndex + index + 1}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm font-medium text-gray-900 dark:text-white">${company.name}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-300">${company.industry}</div>
+            <td class="table-cell whitespace-nowrap">
+                <div class="company-name">${company.name}</div>
+                <div class="company-meta">${company.industry}</div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm font-medium text-gray-900 dark:text-white">${company.designSystem}</div>
+            <td class="table-cell whitespace-nowrap">
+                <span class="chip chip-neutral">${company.designSystem}</span>
             </td>
-            <td class="px-6 py-4">
+            <td class="table-cell">
                 <div class="flex flex-wrap gap-1">
                      ${(() => {
-                       // Jika ada komponen yang dipilih, tampilkan di urutan pertama dengan background merah
-                       let displayComponents = [...company.components];
-                       if (selectedComponent && company.components.includes(selectedComponent)) {
-                         displayComponents = [selectedComponent, ...company.components.filter(c => c !== selectedComponent)];
+                       const visibleComponents = company.components.slice(0, 3);
+                       const selectedIsHidden = selectedComponent && company.components.includes(selectedComponent) && !visibleComponents.includes(selectedComponent);
+
+                       if (selectedIsHidden) {
+                         visibleComponents.push(selectedComponent);
                        }
 
-                       return displayComponents
-                         .slice(0, 3)
+                       const chips = visibleComponents
                          .map(component => {
                            const isSelected = selectedComponent === component;
-                           const bgClass = isSelected ? "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200" : "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200";
+                           const chipClass = isSelected ? "chip-selected" : "chip-blue";
                            return `
-                              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${bgClass}">
+                              <span class="chip ${chipClass}">
                                   ${component}
                               </span>
                             `;
                          })
                          .join("");
+
+                       const hiddenCount = company.components.length - visibleComponents.length;
+                       const hiddenChip =
+                         hiddenCount > 0
+                           ? `
+                              <span class="chip chip-neutral">
+                                  +${hiddenCount}
+                              </span>
+                            `
+                           : "";
+
+                       return chips + hiddenChip;
                      })()}
-                    ${
-                      company.components.length > 3
-                        ? `
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
-                            +${company.components.length - 3}
-                        </span>
-                    `
-                        : ""
-                    }
                 </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+            <td class="table-cell whitespace-nowrap font-semibold text-slate-950 dark:text-white">
                 ${company.components.length}
             </td>
         </tr>
@@ -2741,31 +2777,29 @@ function renderCompanyTable() {
     .join("");
 
   updatePagination();
+  updateDashboardStats();
 }
 
 // Render daftar komponen
 function renderComponentList() {
-  console.log("renderComponentList called");
   const componentList = document.getElementById("componentList");
-  console.log("componentList element:", componentList);
 
   if (!componentList) {
     console.error("componentList element not found!");
     return;
   }
 
-  // Hitung frekuensi komponen
+  // Ranking komponen memakai dataset penuh agar posisi item tidak berubah saat komponen dipilih.
+  const componentStatsCompanies = companiesData;
   const componentFrequency = {};
-  filteredCompanies.forEach(company => {
+  componentStatsCompanies.forEach(company => {
     company.components.forEach(component => {
       componentFrequency[component] = (componentFrequency[component] || 0) + 1;
     });
   });
 
-  console.log("Component frequency calculated for", Object.keys(componentFrequency).length, "components");
-
   // Sort berdasarkan frekuensi
-  const sortedComponents = filteredComponents.sort((a, b) => {
+  const sortedComponents = [...filteredComponents].sort((a, b) => {
     const freqA = componentFrequency[a] || 0;
     const freqB = componentFrequency[b] || 0;
     return freqB - freqA;
@@ -2774,24 +2808,274 @@ function renderComponentList() {
   componentList.innerHTML = sortedComponents
     .map((component, index) => {
       const frequency = componentFrequency[component] || 0;
-      const percentage = filteredCompanies.length > 0 ? Math.round((frequency / filteredCompanies.length) * 100) : 0;
+      const percentage = componentStatsCompanies.length > 0 ? Math.round((frequency / componentStatsCompanies.length) * 100) : 0;
+      const activeClass = selectedComponent === component ? "bg-blue-500/10 ring-1 ring-blue-500/20" : "";
 
       return `
-            <div class="px-3 flex items-center justify-between py-3 hover:bg-blue-100 dark:hover:bg-blue-900 rounded cursor-pointer" onclick="filterByComponent('${component}')">
-                <div class="flex items-center space-x-2">
-                    <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-700 rounded-full w-6 h-6 flex items-center justify-center">${index + 1}</span>
-                    <span class="text-sm text-gray-900 dark:text-white">${component}</span>
+            <div class="component-item ${activeClass}" onclick="filterByComponent('${component}')">
+                <div class="flex min-w-0 items-center gap-3">
+                    <span class="component-rank">${index + 1}</span>
+                    <span class="truncate text-sm font-medium text-slate-800 dark:text-zinc-100">${component}</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xs text-gray-500 dark:text-gray-400">${frequency}/${filteredCompanies.length}</span>
-                    <div class="w-16 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                        <div class="bg-blue-500 h-2 rounded-full" style="width: ${percentage}%"></div>
+                <div class="flex shrink-0 items-center gap-2">
+                    <span class="text-xs text-slate-500 dark:text-zinc-400">${frequency}/${componentStatsCompanies.length}</span>
+                    <div class="progress-track">
+                        <div class="progress-bar" style="width: ${percentage}%"></div>
                     </div>
-                    <span class="text-xs text-gray-600 dark:text-gray-300 font-medium">${percentage}%</span>
+                    <span class="w-9 text-right text-xs font-semibold text-slate-700 dark:text-zinc-300">${percentage}%</span>
                 </div>
             </div>
         `;
     })
+    .join("");
+}
+
+function getComponentFrequency(companies = companiesData) {
+  const componentFrequency = {};
+
+  companies.forEach(company => {
+    company.components.forEach(component => {
+      componentFrequency[component] = (componentFrequency[component] || 0) + 1;
+    });
+  });
+
+  return componentFrequency;
+}
+
+function getTopComponents(limit = 5) {
+  const componentFrequency = getComponentFrequency();
+  return Object.entries(componentFrequency)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([name, count]) => ({
+      name,
+      count,
+      percentage: Math.round((count / companiesData.length) * 100),
+    }));
+}
+
+function renderComponentCategoryControls() {
+  const select = document.getElementById("filterComponent");
+  const menu = document.getElementById("componentFilterMenu");
+
+  if (!select || !menu) return;
+
+  const options = [{ id: "", label: "Semua kategori" }, ...componentCategories];
+
+  select.innerHTML = options.map(option => `<option value="${option.id}">${option.label}</option>`).join("");
+  menu.innerHTML = options
+    .map(
+      option => `
+        <button class="dropdown-option${option.id === selectedComponentCategory ? " is-active" : ""}" type="button" role="option" data-component-filter="${option.id}" aria-selected="${option.id === selectedComponentCategory}">
+          <span>${option.label}</span>
+          <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+          </svg>
+        </button>
+      `
+    )
+    .join("");
+}
+
+function getComponentsByCategory(categoryId) {
+  const category = componentCategories.find(item => item.id === categoryId);
+  return category ? category.components : allComponents;
+}
+
+function updateFilteredComponents() {
+  const categoryComponents = getComponentsByCategory(selectedComponentCategory);
+  filteredComponents = categoryComponents.filter(component => component.toLowerCase().includes(componentSearchTerm));
+}
+
+function renderKeyFindings() {
+  const keyFindingsGrid = document.getElementById("keyFindingsGrid");
+  if (!keyFindingsGrid) return;
+
+  const topComponent = getTopComponents(1)[0];
+  const componentFrequency = getComponentFrequency();
+  const categoryCoverage = componentCategories
+    .map(category => ({
+      ...category,
+      count: category.components.reduce((total, component) => total + (componentFrequency[component] || 0), 0),
+    }))
+    .sort((a, b) => b.count - a.count)[0];
+  const mostCompleteCompany = [...companiesData].sort((a, b) => b.components.length - a.components.length)[0];
+  const averageComponents = Math.round(companiesData.reduce((total, company) => total + company.components.length, 0) / companiesData.length);
+
+  const findings = [
+    {
+      label: "Komponen paling universal",
+      value: topComponent.name,
+      note: `${topComponent.count}/${companiesData.length} perusahaan (${topComponent.percentage}%).`,
+    },
+    {
+      label: "Kategori paling dominan",
+      value: categoryCoverage.label,
+      note: `${categoryCoverage.components.length} komponen dalam kategori ini.`,
+    },
+    {
+      label: "Design system paling lengkap",
+      value: mostCompleteCompany.name,
+      note: `${mostCompleteCompany.components.length} komponen terdokumentasi.`,
+    },
+    {
+      label: "Rata-rata kelengkapan",
+      value: averageComponents,
+      note: "komponen per perusahaan dalam dataset.",
+    },
+  ];
+
+  keyFindingsGrid.innerHTML = findings
+    .map(
+      finding => `
+        <article class="finding-card">
+          <p class="finding-label">${finding.label}</p>
+          <p class="finding-value">${finding.value}</p>
+          <p class="finding-note">${finding.note}</p>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderBayuLens() {
+  const lensChips = document.getElementById("bayuLensChips");
+  if (!lensChips) return;
+
+  const topComponents = getTopComponents(3);
+  const chips = [
+    "Curated by Bayu",
+    `${componentCategories.length} kategori riset`,
+    `${topComponents.map(component => component.name).join(", ")} paling sering muncul`,
+  ];
+
+  lensChips.innerHTML = chips.map(chip => `<span class="chip chip-neutral">${chip}</span>`).join("");
+}
+
+function initializeCompareMode() {
+  const companyASelect = document.getElementById("compareCompanyA");
+  const companyBSelect = document.getElementById("compareCompanyB");
+  const companyAMenu = document.getElementById("compareCompanyAMenu");
+  const companyBMenu = document.getElementById("compareCompanyBMenu");
+
+  if (!companyASelect || !companyBSelect || !companyAMenu || !companyBMenu) return;
+
+  const options = companiesData.map(company => `<option value="${company.id}">${company.name} - ${company.designSystem}</option>`).join("");
+  companyASelect.innerHTML = options;
+  companyBSelect.innerHTML = options;
+  companyASelect.value = String(companiesData.find(company => company.name === "Adobe")?.id || companiesData[0].id);
+  companyBSelect.value = String(companiesData.find(company => company.name === "Google")?.id || companiesData[1].id);
+  renderCompareDropdownMenu(companyAMenu, companyASelect.value);
+  renderCompareDropdownMenu(companyBMenu, companyBSelect.value);
+
+  initializeCompareDropdown("A");
+  initializeCompareDropdown("B");
+
+  companyASelect.addEventListener("change", function () {
+    syncCompareDropdown("A");
+    renderCompareMode();
+  });
+  companyBSelect.addEventListener("change", function () {
+    syncCompareDropdown("B");
+    renderCompareMode();
+  });
+  renderCompareMode();
+}
+
+function renderCompareDropdownMenu(menu, selectedValue) {
+  menu.innerHTML = companiesData
+    .map(company => {
+      const value = String(company.id);
+      const isActive = value === selectedValue;
+
+      return `
+        <button class="dropdown-option${isActive ? " is-active" : ""}" type="button" role="option" data-compare-company="${value}" aria-selected="${isActive}">
+          <span class="truncate">${company.name} - ${company.designSystem}</span>
+          <svg class="dropdown-check h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+          </svg>
+        </button>
+      `;
+    })
+    .join("");
+}
+
+function initializeCompareDropdown(side) {
+  initializeFilterDropdown({
+    dropdownId: `compareCompany${side}Dropdown`,
+    buttonId: `compareCompany${side}Button`,
+    menuId: `compareCompany${side}Menu`,
+    chevronId: `compareCompany${side}Chevron`,
+    selectId: `compareCompany${side}`,
+    labelId: `compareCompany${side}Label`,
+    optionSelector: "[data-compare-company]",
+    datasetKey: "compareCompany",
+    sync: value => syncCompareDropdown(side, value),
+  });
+}
+
+function syncCompareDropdown(side, value = document.getElementById(`compareCompany${side}`)?.value || "") {
+  syncFilterDropdown({
+    selectId: `compareCompany${side}`,
+    labelId: `compareCompany${side}Label`,
+    menuId: `compareCompany${side}Menu`,
+    optionSelector: "[data-compare-company]",
+    datasetKey: "compareCompany",
+    fallbackLabel: "Pilih perusahaan",
+    value,
+  });
+}
+
+function renderCompareMode() {
+  const companyA = companiesData.find(company => company.id === Number(document.getElementById("compareCompanyA")?.value));
+  const companyB = companiesData.find(company => company.id === Number(document.getElementById("compareCompanyB")?.value));
+  const compareSummary = document.getElementById("compareSummary");
+  const compareResults = document.getElementById("compareResults");
+
+  if (!companyA || !companyB || !compareSummary || !compareResults) return;
+
+  const componentsA = new Set(companyA.components);
+  const componentsB = new Set(companyB.components);
+  const sharedComponents = companyA.components.filter(component => componentsB.has(component)).sort();
+  const onlyA = companyA.components.filter(component => !componentsB.has(component)).sort();
+  const onlyB = companyB.components.filter(component => !componentsA.has(component)).sort();
+  const overlapPercentage = Math.round((sharedComponents.length / new Set([...companyA.components, ...companyB.components]).size) * 100);
+
+  compareSummary.innerHTML = [
+    { label: "Komponen sama", value: sharedComponents.length, note: `${overlapPercentage}% overlap` },
+    { label: `Unik ${companyA.name}`, value: onlyA.length, note: companyA.designSystem },
+    { label: `Unik ${companyB.name}`, value: onlyB.length, note: companyB.designSystem },
+  ]
+    .map(
+      stat => `
+        <article class="compare-stat">
+          <p class="finding-label">${stat.label}</p>
+          <p class="finding-value">${stat.value}</p>
+          <p class="finding-note">${stat.note}</p>
+        </article>
+      `
+    )
+    .join("");
+
+  compareResults.innerHTML = [
+    { title: "Komponen yang sama", items: sharedComponents, chipClass: "chip-blue" },
+    { title: `Hanya ${companyA.name}`, items: onlyA, chipClass: "chip-neutral" },
+    { title: `Hanya ${companyB.name}`, items: onlyB, chipClass: "chip-selected" },
+  ]
+    .map(
+      group => `
+        <article class="compare-column">
+          <h3 class="text-sm font-semibold text-slate-950 dark:text-white">${group.title}</h3>
+          <div class="compare-list">
+            ${
+              group.items.length
+                ? group.items.map(component => `<span class="chip ${group.chipClass}">${component}</span>`).join("")
+                : `<p class="finding-note">Tidak ada komponen di kelompok ini.</p>`
+            }
+          </div>
+        </article>
+      `
+    )
     .join("");
 }
 
@@ -2822,13 +3106,14 @@ function setupEventListeners() {
     }
     selectedComponent = null; // Reset komponen yang dipilih
     currentPage = 1;
+    syncIndustryDropdown(filterValue);
     renderCompanyTable();
   });
 
   // Search komponen
   document.getElementById("searchComponent").addEventListener("input", function (e) {
-    const searchTerm = e.target.value.toLowerCase();
-    filteredComponents = allComponents.filter(component => component.toLowerCase().includes(searchTerm));
+    componentSearchTerm = e.target.value.toLowerCase();
+    updateFilteredComponents();
     selectedComponent = null; // Reset komponen yang dipilih
     renderComponentList();
   });
@@ -2836,12 +3121,10 @@ function setupEventListeners() {
   // Filter komponen
   document.getElementById("filterComponent").addEventListener("change", function (e) {
     const filterValue = e.target.value;
-    if (filterValue === "") {
-      filteredComponents = [...allComponents];
-    } else {
-      filteredComponents = allComponents.filter(component => component.toLowerCase().includes(filterValue));
-    }
+    selectedComponentCategory = filterValue;
+    updateFilteredComponents();
     selectedComponent = null; // Reset komponen yang dipilih
+    syncComponentDropdown(filterValue);
     renderComponentList();
   });
 
@@ -2861,6 +3144,8 @@ function setupEventListeners() {
     }
   });
 
+  document.getElementById("exportButton").addEventListener("click", exportData);
+
   // Modal
   document.getElementById("closeModal").addEventListener("click", function () {
     document.getElementById("companyModal").classList.add("hidden");
@@ -2874,12 +3159,138 @@ function setupEventListeners() {
   });
 }
 
+function initializeComponentDropdown() {
+  initializeFilterDropdown({
+    dropdownId: "componentFilterDropdown",
+    buttonId: "componentFilterButton",
+    menuId: "componentFilterMenu",
+    chevronId: "componentFilterChevron",
+    selectId: "filterComponent",
+    labelId: "componentFilterLabel",
+    optionSelector: "[data-component-filter]",
+    datasetKey: "componentFilter",
+    sync: syncComponentDropdown,
+  });
+}
+
+function initializeIndustryDropdown() {
+  initializeFilterDropdown({
+    dropdownId: "industryFilterDropdown",
+    buttonId: "industryFilterButton",
+    menuId: "industryFilterMenu",
+    chevronId: "industryFilterChevron",
+    selectId: "filterCompany",
+    labelId: "industryFilterLabel",
+    optionSelector: "[data-industry-filter]",
+    datasetKey: "industryFilter",
+    sync: syncIndustryDropdown,
+  });
+}
+
+function initializeFilterDropdown({ dropdownId, buttonId, menuId, chevronId, selectId, optionSelector, datasetKey, sync }) {
+  const dropdown = document.getElementById(dropdownId);
+  const button = document.getElementById(buttonId);
+  const menu = document.getElementById(menuId);
+  const chevron = document.getElementById(chevronId);
+  const select = document.getElementById(selectId);
+
+  if (!dropdown || !button || !menu || !select) return;
+
+  const options = menu.querySelectorAll(optionSelector);
+
+  const closeDropdown = () => {
+    menu.classList.add("hidden");
+    button.setAttribute("aria-expanded", "false");
+    chevron?.classList.remove("rotate-180");
+  };
+
+  const openDropdown = () => {
+    menu.classList.remove("hidden");
+    button.setAttribute("aria-expanded", "true");
+    chevron?.classList.add("rotate-180");
+  };
+
+  button.addEventListener("click", function (e) {
+    e.stopPropagation();
+    if (menu.classList.contains("hidden")) {
+      openDropdown();
+    } else {
+      closeDropdown();
+    }
+  });
+
+  options.forEach(option => {
+    option.addEventListener("click", function () {
+      select.value = option.dataset[datasetKey] || "";
+      select.dispatchEvent(new Event("change"));
+      closeDropdown();
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!dropdown.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeDropdown();
+    }
+  });
+
+  sync(select.value);
+}
+
+function syncComponentDropdown(value) {
+  syncFilterDropdown({
+    selectId: "filterComponent",
+    labelId: "componentFilterLabel",
+    menuId: "componentFilterMenu",
+    optionSelector: "[data-component-filter]",
+    datasetKey: "componentFilter",
+    fallbackLabel: "Semua kategori",
+    value,
+  });
+}
+
+function syncIndustryDropdown(value) {
+  syncFilterDropdown({
+    selectId: "filterCompany",
+    labelId: "industryFilterLabel",
+    menuId: "industryFilterMenu",
+    optionSelector: "[data-industry-filter]",
+    datasetKey: "industryFilter",
+    fallbackLabel: "Semua industri",
+    value,
+  });
+}
+
+function syncFilterDropdown({ selectId, labelId, menuId, optionSelector, datasetKey, fallbackLabel, value }) {
+  const select = document.getElementById(selectId);
+  const label = document.getElementById(labelId);
+  const menu = document.getElementById(menuId);
+
+  if (!select || !label) return;
+
+  const selectedOption = [...select.options].find(option => option.value === value);
+  label.textContent = selectedOption ? selectedOption.textContent : fallbackLabel;
+
+  const options = menu ? menu.querySelectorAll(optionSelector) : [];
+  options.forEach(option => {
+    const isActive = (option.dataset[datasetKey] || "") === value;
+    option.classList.toggle("is-active", isActive);
+    option.setAttribute("aria-selected", String(isActive));
+  });
+}
+
 // Filter berdasarkan komponen
 function filterByComponent(component) {
   selectedComponent = component; // Simpan komponen yang dipilih
   filteredCompanies = companiesData.filter(company => company.components.includes(component));
   currentPage = 1;
   renderCompanyTable();
+  renderComponentList();
 }
 
 // Tampilkan detail perusahaan
@@ -2889,32 +3300,30 @@ function showCompanyDetail(companyId) {
 
   document.getElementById("modalTitle").textContent = company.name;
   document.getElementById("modalContent").innerHTML = `
-        <div class="space-y-4">
-            <div>
-                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Sumber</h4>
-                <a href="${company.source || "#"}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline text-sm">
+        <div class="space-y-5">
+            <div class="detail-card">
+                <h4 class="mb-2 text-sm font-semibold text-slate-950 dark:text-white">Sumber</h4>
+                <a href="${company.source || "#"}" target="_blank" class="break-all text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200">
                     ${company.source || "Placeholder - Link sumber akan diisi nanti"}
                 </a>
             </div>
-            <div>
-                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Design System</h4>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
-                    ${company.designSystem}
-                </span>
+            <div class="grid gap-3 sm:grid-cols-2">
+                <div class="detail-card">
+                    <h4 class="mb-2 text-sm font-semibold text-slate-950 dark:text-white">Design System</h4>
+                    <span class="chip chip-blue">${company.designSystem}</span>
+                </div>
+                <div class="detail-card">
+                    <h4 class="mb-2 text-sm font-semibold text-slate-950 dark:text-white">Industri</h4>
+                    <span class="chip chip-neutral capitalize">${company.industry}</span>
+                </div>
             </div>
             <div>
-                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Industri</h4>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
-                    ${company.industry}
-                </span>
-            </div>
-          
-                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Komponen UI (${company.components.length})</h4>
+                <h4 class="mb-3 text-sm font-semibold text-slate-950 dark:text-white">Komponen UI (${company.components.length})</h4>
                 <div class="flex flex-wrap gap-2">
                     ${company.components
                       .map(
                         component => `
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                        <span class="chip chip-blue">
                             ${component}
                         </span>
                     `
@@ -2931,7 +3340,7 @@ function showCompanyDetail(companyId) {
 // Update pagination
 function updatePagination() {
   const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage + 1;
+  const startIndex = filteredCompanies.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
   const endIndex = Math.min(currentPage * itemsPerPage, filteredCompanies.length);
 
   document.getElementById("showingStart").textContent = startIndex;
@@ -2960,15 +3369,33 @@ function addCompany(name, biography, components, industry) {
 
 // Fungsi untuk mengimpor data dari CSV/Excel
 function importData(data) {
-  // Implementasi import data dari file
-  console.log("Import data:", data);
+  return data;
 }
 
 // Update jumlah perusahaan di header
 function updateCompanyCount() {
-  const countElement = document.querySelector(".bg-blue-100");
+  const countElement = document.getElementById("companyCountBadge");
   if (countElement) {
-    countElement.textContent = `${companiesData.length} Perusahaan`;
+    countElement.textContent = companiesData.length;
+  }
+}
+
+function updateDashboardStats() {
+  const totalComponentsStat = document.getElementById("totalComponentsStat");
+  const totalIndustriesStat = document.getElementById("totalIndustriesStat");
+  const visibleCompaniesStat = document.getElementById("visibleCompaniesStat");
+  const uniqueIndustries = new Set(companiesData.map(company => company.industry)).size;
+
+  if (totalComponentsStat) {
+    totalComponentsStat.textContent = allComponents.length;
+  }
+
+  if (totalIndustriesStat) {
+    totalIndustriesStat.textContent = uniqueIndustries;
+  }
+
+  if (visibleCompaniesStat) {
+    visibleCompaniesStat.textContent = `${filteredCompanies.length} data`;
   }
 }
 
@@ -3082,43 +3509,41 @@ function renderCreatorProfile() {
   modalContent.innerHTML = `
     <!-- Profile Image -->
     <div class="mb-6 flex justify-center">
-      <img src="./index.png" alt="${creatorData.name}" class="w-32 h-32 rounded-full object-cover border-2 border-blue-500 dark:border-blue-400" />
+      <img src="./index.png" alt="${creatorData.name}" class="avatar-image" />
     </div>
     
     <!-- Name -->
-    <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">${creatorData.name}</h4>
+    <h4 class="mb-2 text-2xl font-semibold text-slate-950 dark:text-white">${creatorData.name}</h4>
     
     <!-- Description -->
-    <p class="text-gray-600 dark:text-gray-300 mb-6 px-4 text-sm leading-relaxed">
+    <p class="mb-6 px-2 text-sm leading-7 text-slate-600 dark:text-zinc-300">
       ${creatorData.description}
     </p>
     
     <!-- Social Links -->
-    <div class="flex justify-center space-x-4 mb-4">
+    <div class="mb-4 flex justify-center gap-3">
       <!-- LinkedIn -->
-      <a href="${creatorData.socialLinks.linkedin}" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+      <a href="${creatorData.socialLinks.linkedin}" target="_blank" rel="noopener noreferrer" class="icon-button">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
         </svg>
       </a>
       
       <!-- GitHub -->
-      <a href="${creatorData.socialLinks.github}" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 hover:text-white transition-colors">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+      <a href="${creatorData.socialLinks.github}" target="_blank" rel="noopener noreferrer" class="icon-button">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
         </svg>
       </a>
       
       <!-- Portfolio/Website -->
-      <a href="${creatorData.socialLinks.portfolio}" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <a href="${creatorData.socialLinks.portfolio}" target="_blank" rel="noopener noreferrer" class="icon-button">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
         </svg>
       </a>
     </div>
     
-    <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-      
-    </div>
+    <div class="mt-6 border-t border-slate-200/70 pt-4 dark:border-white/10"></div>
   `;
 }

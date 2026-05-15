@@ -5,265 +5,416 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DSBM</title>
     <link href="./output.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-      };
-    </script>
-    <link rel="icon" class="rounded-full" href="/index.png" />
+    <link rel="icon" href="/index.png" />
   </head>
-  <body class="bg-gray-50 dark:bg-gray-900">
-    <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
-      <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
-          <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Analisis Komponen UI</h1>
-            <p class="text-sm text-gray-600 dark:text-gray-300">Analisis komponen design sistem dari perusahaan</p>
-          </div>
-          <div class="flex items-center space-x-4">
-            <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">75 Perusahaan</div>
-            <!-- Creator Profile Button -->
-            <button id="creatorProfileBtn" class="p-0 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 overflow-hidden w-10 h-10 flex items-center justify-center">
-              <img src="./index.png" alt="Creator Profile" class="w-full h-full object-cover" />
+  <body>
+    <div class="app-shell">
+      <div class="app-container">
+        <header class="nav-shell frosted-panel">
+          <a href="#" class="flex items-center gap-3" aria-label="DSBM home">
+            <span class="brand-mark">DS</span>
+            <span>
+              <span class="block text-sm font-semibold text-slate-950 dark:text-white">DSBM</span>
+              <span class="block text-xs text-slate-500 dark:text-zinc-400">Design System Intelligence</span>
+            </span>
+          </a>
+
+          <div class="flex items-center gap-2 sm:gap-3">
+            <button id="exportButton" class="primary-button" type="button">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+              </svg>
+              Export
             </button>
-            <!-- Dark Mode Toggle -->
-            <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-              <svg id="sunIcon" class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+            <button id="creatorProfileBtn" class="icon-button overflow-hidden p-0" type="button" aria-label="Buka profil creator">
+              <img src="./index.png" alt="Creator Profile" class="h-full w-full object-cover" />
+            </button>
+
+            <button id="darkModeToggle" class="icon-button" type="button" aria-label="Ganti tema">
+              <svg id="sunIcon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                ></path>
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"
+                />
               </svg>
-              <svg id="moonIcon" class="w-5 h-5 text-gray-700 dark:text-gray-300 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+              <svg id="moonIcon" class="hidden h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" />
               </svg>
             </button>
           </div>
-        </div>
-      </div>
-    </header>
+        </header>
 
-    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <!-- Sidebar Komponen -->
-        <div class="lg:col-span-1">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700 p-6">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Komponen UI</h2>
+        <section class="hero-panel frosted-panel">
+          <div>
+            <p class="eyebrow">UI Component Research</p>
+            <h1 class="hero-title">Dashboard analisis design system perusahaan.</h1>
+            <p class="hero-copy">Lihat pola komponen UI yang paling sering digunakan, bandingkan design system antar industri, dan temukan standar antarmuka yang muncul dari 75 perusahaan.</p>
+          </div>
 
-            <!-- Search Komponen -->
-            <div class="mb-4">
-              <input
-                type="text"
-                id="searchComponent"
-                placeholder="Cari komponen..."
-                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+          <div class="metric-grid">
+            <article class="metric-card">
+              <p class="metric-label">Perusahaan</p>
+              <p id="companyCountBadge" class="metric-value">75</p>
+            </article>
+            <article class="metric-card">
+              <p class="metric-label">Komponen</p>
+              <p id="totalComponentsStat" class="metric-value">0</p>
+            </article>
+            <article class="metric-card">
+              <p class="metric-label">Industri</p>
+              <p id="totalIndustriesStat" class="metric-value">0</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="insight-grid">
+          <article class="section-panel frosted-panel">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Key Findings</p>
+                <h2 class="section-title mt-2">Temuan utama dari dataset</h2>
+              </div>
+              <span class="soft-badge">Live data</span>
             </div>
+            <div id="keyFindingsGrid" class="finding-grid"></div>
+          </article>
 
-            <!-- Filter Komponen -->
-            <div class="mb-4">
-              <select id="filterComponent" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">Semua Komponen</option>
-                <option value="button">Button</option>
-                <option value="form">Form</option>
-                <option value="card">Card</option>
-                <option value="navigation">Navigation</option>
-                <option value="modal">Modal</option>
-                <option value="table">Table</option>
-              </select>
-            </div>
+          <article class="section-panel frosted-panel bayu-lens-panel">
+            <p class="eyebrow">Bayu Lens</p>
+            <h2 class="section-title mt-2">Cara baca pribadi untuk design system modern.</h2>
+            <p id="bayuLensCopy" class="lens-copy">
+              Dataset ini dibaca sebagai peta pola: komponen yang sering muncul menunjukkan kebutuhan paling dasar, sedangkan komponen kategori overlay, feedback, dan data display memberi sinyal kedewasaan sebuah design system.
+            </p>
+            <div id="bayuLensChips" class="mt-5 flex flex-wrap gap-2"></div>
+          </article>
+        </section>
 
-            <!-- Daftar Komponen -->
-            <div id="componentList" class="space-y-3 rounded-lgh-full overflow-y-auto">
-              <!-- Komponen akan dimuat dari JavaScript -->
+        <section class="section-panel frosted-panel compare-panel">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Compare Mode</p>
+              <h2 class="section-title mt-2">Bandingkan dua design system.</h2>
+              <p class="section-subtitle">Lihat komponen yang sama dan unik dari dua perusahaan.</p>
             </div>
           </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="lg:col-span-3">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700">
-            <!-- Header Tabel -->
-            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <div class="flex justify-between items-center">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Data Perusahaan</h2>
-                <div class="flex items-center space-x-4">
-                  <!-- Search Perusahaan -->
-                  <div class="relative">
-                    <input
-                      type="text"
-                      id="searchCompany"
-                      placeholder="Cari perusahaan..."
-                      class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          <div class="compare-controls">
+            <label>
+              <span class="compare-label">Perusahaan pertama</span>
+              <select id="compareCompanyA" class="hidden" aria-hidden="true" tabindex="-1"></select>
+              <div id="compareCompanyADropdown" class="custom-dropdown">
+                <button id="compareCompanyAButton" class="dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="flex min-w-0 items-center gap-3">
+                    <span class="dropdown-trigger-icon">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 12h14M5 16h9" />
                       </svg>
-                    </div>
-                  </div>
-                  <!-- Filter Perusahaan -->
-                  <select id="filterCompany" class="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Semua Perusahaan</option>
-                    <option value="tech">Teknologi</option>
-                    <option value="transportation">Transportasi</option>
-                    <option value="automotive">Otomotif</option>
-                    <option value="education">Pendidikan</option>
-                    <option value="retail">Ritel</option>
-                    <option value="realestate">Properti</option>
-                    <option value="industrial">Industri</option>
-                    <option value="government">Pemerintah</option>
-                    <option value="finance">Keuangan</option>
-                    <option value="ecommerce">E-commerce</option>
-                    <option value="healthcare">Kesehatan</option>
-                    <option value="media">Media</option>
-                  </select>
+                    </span>
+                    <span id="compareCompanyALabel" class="truncate">Pilih perusahaan</span>
+                  </span>
+                  <svg id="compareCompanyAChevron" class="h-4 w-4 shrink-0 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <div id="compareCompanyAMenu" class="dropdown-menu hidden" role="listbox" aria-labelledby="compareCompanyAButton"></div>
+              </div>
+            </label>
+            <label>
+              <span class="compare-label">Perusahaan kedua</span>
+              <select id="compareCompanyB" class="hidden" aria-hidden="true" tabindex="-1"></select>
+              <div id="compareCompanyBDropdown" class="custom-dropdown">
+                <button id="compareCompanyBButton" class="dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="flex min-w-0 items-center gap-3">
+                    <span class="dropdown-trigger-icon">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 12h14M5 16h9" />
+                      </svg>
+                    </span>
+                    <span id="compareCompanyBLabel" class="truncate">Pilih perusahaan</span>
+                  </span>
+                  <svg id="compareCompanyBChevron" class="h-4 w-4 shrink-0 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <div id="compareCompanyBMenu" class="dropdown-menu hidden" role="listbox" aria-labelledby="compareCompanyBButton"></div>
+              </div>
+            </label>
+          </div>
+
+          <div id="compareSummary" class="compare-summary"></div>
+          <div id="compareResults" class="compare-results"></div>
+        </section>
+
+        <main class="content-grid">
+          <aside class="section-panel frosted-panel lg:sticky lg:top-28 lg:self-start">
+            <div class="section-header">
+              <div>
+                <h2 class="section-title">Komponen UI</h2>
+                <p class="section-subtitle">Urut berdasarkan frekuensi pemakaian.</p>
+              </div>
+              <span id="visibleCompaniesStat" class="soft-badge component-count-badge">75 data</span>
+            </div>
+
+            <div class="mb-5 grid gap-3">
+              <label class="relative block">
+                <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
+                  </svg>
+                </span>
+                <input type="text" id="searchComponent" placeholder="Cari komponen" class="search-field" />
+              </label>
+
+              <select id="filterComponent" class="hidden" aria-hidden="true" tabindex="-1">
+                <option value="">Semua kategori</option>
+              </select>
+
+              <div id="componentFilterDropdown" class="custom-dropdown">
+                <button id="componentFilterButton" class="dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="flex min-w-0 items-center gap-3">
+                    <span class="dropdown-trigger-icon">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M7 12h10m-7 5h4" />
+                      </svg>
+                    </span>
+                    <span id="componentFilterLabel" class="truncate">Semua kategori</span>
+                  </span>
+                  <svg id="componentFilterChevron" class="h-4 w-4 shrink-0 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+
+                <div id="componentFilterMenu" class="dropdown-menu hidden" role="listbox" aria-labelledby="componentFilterButton">
+                  <!-- Opsi kategori komponen dimuat dari script.js -->
                 </div>
               </div>
             </div>
 
-            <!-- Tabel Data -->
-            <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead class="bg-gray-50 dark:bg-gray-800">
-                  <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">No</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nama Perusahaan</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Design System</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Komponen UI</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Jumlah Komponen</th>
-                  </tr>
-                </thead>
-                <tbody id="companyTableBody" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  <!-- Data akan dimuat dari JavaScript -->
-                </tbody>
-              </table>
-            </div>
+            <div id="componentList" class="max-h-[620px] space-y-2 overflow-y-auto pr-1"></div>
+          </aside>
 
-            <!-- Pagination -->
-            <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-              <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-700 dark:text-gray-300">Menampilkan <span id="showingStart">1</span> sampai <span id="showingEnd">10</span> dari <span id="totalRecords">0</span> perusahaan</div>
-                <div class="flex items-center space-x-2">
-                  <button id="prevPage" class="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50" disabled>
-                    Sebelumnya
+          <section class="section-panel frosted-panel">
+            <div class="section-header">
+              <div>
+                <h2 class="section-title">Data Perusahaan</h2>
+                <p class="section-subtitle">Klik baris untuk melihat sumber dan daftar komponen lengkap.</p>
+              </div>
+
+              <div class="control-grid w-full sm:max-w-xl">
+                <label class="relative block">
+                  <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
+                    </svg>
+                  </span>
+                  <input type="text" id="searchCompany" placeholder="Cari perusahaan" class="search-field" />
+                </label>
+
+                <select id="filterCompany" class="hidden" aria-hidden="true" tabindex="-1">
+                  <option value="">Semua industri</option>
+                  <option value="tech">Teknologi</option>
+                  <option value="transportation">Transportasi</option>
+                  <option value="automotive">Otomotif</option>
+                  <option value="education">Pendidikan</option>
+                  <option value="retail">Ritel</option>
+                  <option value="realestate">Properti</option>
+                  <option value="industrial">Industri</option>
+                  <option value="government">Pemerintah</option>
+                  <option value="finance">Keuangan</option>
+                  <option value="ecommerce">E-commerce</option>
+                  <option value="healthcare">Kesehatan</option>
+                  <option value="media">Media</option>
+                </select>
+
+                <div id="industryFilterDropdown" class="custom-dropdown">
+                  <button id="industryFilterButton" class="dropdown-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="flex min-w-0 items-center gap-3">
+                      <span class="dropdown-trigger-icon">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M6 12h12M10 17h4" />
+                        </svg>
+                      </span>
+                      <span id="industryFilterLabel" class="truncate">Semua industri</span>
+                    </span>
+                    <svg id="industryFilterChevron" class="h-4 w-4 shrink-0 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+                    </svg>
                   </button>
-                  <span id="currentPage" class="px-3 py-1 bg-blue-500 text-white rounded-md text-sm">1</span>
-                  <button id="nextPage" class="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50">Selanjutnya</button>
+
+                  <div id="industryFilterMenu" class="dropdown-menu hidden" role="listbox" aria-labelledby="industryFilterButton">
+                    <button class="dropdown-option is-active" type="button" role="option" data-industry-filter="" aria-selected="true">
+                      <span>Semua industri</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="tech" aria-selected="false">
+                      <span>Teknologi</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="transportation" aria-selected="false">
+                      <span>Transportasi</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="automotive" aria-selected="false">
+                      <span>Otomotif</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="education" aria-selected="false">
+                      <span>Pendidikan</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="retail" aria-selected="false">
+                      <span>Ritel</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="realestate" aria-selected="false">
+                      <span>Properti</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="industrial" aria-selected="false">
+                      <span>Industri</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="government" aria-selected="false">
+                      <span>Pemerintah</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="finance" aria-selected="false">
+                      <span>Keuangan</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="ecommerce" aria-selected="false">
+                      <span>E-commerce</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="healthcare" aria-selected="false">
+                      <span>Kesehatan</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button class="dropdown-option" type="button" role="option" data-industry-filter="media" aria-selected="false">
+                      <span>Media</span>
+                      <svg class="dropdown-check h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 13 4 4L19 7" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Modal Detail Perusahaan -->
-      <div id="companyModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-50 overflow-y-auto h-full w-full hidden">
-        <div class="relative top-20 mx-auto p-5 border dark:border-gray-700 w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white dark:bg-gray-800">
-          <div class="mt-3">
-            <div class="flex justify-between items-center mb-4">
-              <h3 id="modalTitle" class="text-lg font-semibold text-gray-900 dark:text-white">Detail Perusahaan</h3>
-              <button id="closeModal" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              </button>
-            </div>
-            <div id="modalContent" class="text-gray-700">
-              <!-- Konten modal akan dimuat dari JavaScript -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal Creator Profile -->
-      <div id="creatorModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-50 overflow-y-auto h-full w-full hidden">
-        <div class="relative top-20 mx-auto p-5 border dark:border-gray-700 w-11/12 md:w-2/3 lg:w-1/3 shadow-lg rounded-md bg-white dark:bg-gray-800">
-          <div class="mt-3">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Tentang Creator</h3>
-              <button id="closeCreatorModal" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              </button>
-            </div>
-            <div class="text-center">
-              <!-- Profile Image -->
-              <div class="mb-6 flex justify-center">
-                <img src="./index.png" alt="Maulana Bayu" class="w-32 h-32 rounded-full object-cover border-4 border-blue-500 dark:border-blue-400" />
+            <div class="table-shell">
+              <div class="overflow-x-auto">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th class="table-head-cell">No</th>
+                      <th class="table-head-cell">Perusahaan</th>
+                      <th class="table-head-cell">Design System</th>
+                      <th class="table-head-cell">Komponen UI</th>
+                      <th class="table-head-cell">Jumlah</th>
+                    </tr>
+                  </thead>
+                  <tbody id="companyTableBody"></tbody>
+                </table>
               </div>
 
-              <!-- Name -->
-              <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Maulana Bayu</h4>
-
-              <!-- Description -->
-              <p class="text-gray-600 dark:text-gray-300 mb-6 px-4">[Deskripsi singkat tentang Anda - silakan edit di script.js pada bagian creatorData]</p>
-
-              <!-- Social Links -->
-              <div class="flex justify-center space-x-4 mb-4">
-                <!-- LinkedIn -->
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                    />
-                  </svg>
-                </a>
-
-                <!-- GitHub -->
-                <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 hover:text-white">
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                    />
-                  </svg>
-                </a>
-
-                <!-- Portfolio/Website -->
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
-                >
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                    />
-                  </svg>
-                </a>
+              <div class="flex flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <p class="text-sm text-slate-500 dark:text-zinc-400">Menampilkan <span id="showingStart">1</span> sampai <span id="showingEnd">45</span> dari <span id="totalRecords">0</span> perusahaan</p>
+                <div class="flex items-center gap-2">
+                  <button id="prevPage" class="pagination-button" type="button" disabled>Sebelumnya</button>
+                  <span id="currentPage" class="page-indicator">1</span>
+                  <button id="nextPage" class="pagination-button" type="button">Selanjutnya</button>
+                </div>
               </div>
-
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">Silakan edit informasi dan link di script.js</p>
             </div>
-          </div>
-        </div>
+          </section>
+        </main>
       </div>
     </div>
 
-    <script>
-      // Test script loading
-      console.log("HTML loaded, about to load script.js");
-      window.addEventListener("error", function (e) {
-        console.error("JavaScript error:", e.error);
-      });
-    </script>
+    <div id="companyModal" class="modal-backdrop hidden">
+      <div class="modal-card frosted-panel">
+        <div class="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <p class="eyebrow">Detail perusahaan</p>
+            <h3 id="modalTitle" class="mt-2 text-2xl font-semibold text-slate-950 dark:text-white">Detail Perusahaan</h3>
+          </div>
+          <button id="closeModal" class="icon-button" type="button" aria-label="Tutup modal">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <div id="creatorModal" class="modal-backdrop hidden">
+      <div class="modal-card frosted-panel max-w-xl">
+        <div class="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <p class="eyebrow">Creator</p>
+            <h3 class="mt-2 text-2xl font-semibold text-slate-950 dark:text-white">Tentang Creator</h3>
+          </div>
+          <button id="closeCreatorModal" class="icon-button" type="button" aria-label="Tutup profil creator">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="text-center"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer" aria-label="Footer">
+      <div class="site-footer-inner">
+        <div>
+          <p class="eyebrow">Footer</p>
+          <h2 class="site-footer-title">Sudah sampai bawah?</h2>
+          <p class="site-footer-copy">
+            DSBM adalah catatan riset Maulana Bayu untuk membaca pola komponen UI dari design system perusahaan besar. Dataset ini bisa terus tumbuh seiring sumber baru ditemukan.
+          </p>
+        </div>
+
+        <div class="site-footer-links" aria-label="Social links">
+          <a href="https://github.com/m4sbay" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/mmaulanabayu/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://bento.me/m4sbay" target="_blank" rel="noopener noreferrer">Portfolio</a>
+        </div>
+
+        <div class="site-footer-meta">
+          <span>DSBM © 2026</span>
+          <span>Curated by Maulana Bayu</span>
+        </div>
+      </div>
+    </footer>
+
     <script src="script.js"></script>
-    <script>
-      console.log("script.js loaded");
-    </script>
   </body>
 </html>
