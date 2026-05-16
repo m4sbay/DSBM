@@ -22,12 +22,7 @@ DSBM menawarkan solusi berupa dashboard eksplorasi data. Data perusahaan, design
 
 ## Demo
 
-Live demo belum tersedia. Setelah project dideploy, tambahkan tautannya di bagian ini.
-
-```text
-
-Demo: [Lihat live demo] (https://dsbm.vercel.app)
-```
+Demo: [Lihat live demo](https://dsbm.vercel.app)
 
 
 Screenshot dashboard:
