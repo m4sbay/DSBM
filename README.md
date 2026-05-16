@@ -25,9 +25,10 @@ DSBM menawarkan solusi berupa dashboard eksplorasi data. Data perusahaan, design
 Live demo belum tersedia. Setelah project dideploy, tambahkan tautannya di bagian ini.
 
 ```text
-Demo: Belum tersedia
-Repository: https://github.com/m4sbay/dsbm
+
+Demo: [Lihat live demo] (https://dsbm.vercel.app)
 ```
+
 
 Screenshot dashboard:
 
