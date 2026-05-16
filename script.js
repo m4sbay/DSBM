@@ -2704,6 +2704,14 @@ function initializeApp() {
   updateDashboardStats();
   initializeCreatorModal();
   initializeMobileNavMenu();
+  updateFooterYear();
+}
+
+function updateFooterYear() {
+  const footerYear = document.getElementById("footerYear");
+  if (footerYear) {
+    footerYear.textContent = new Date().getFullYear();
+  }
 }
 
 // Render tabel perusahaan

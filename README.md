@@ -1,189 +1,184 @@
-# DSBM - Design System Business Management
+# DSBM - Design System Intelligence
 
-Dashboard analisis komponen design sistem dari 75 perusahaan menggunakan HTML, Tailwind CSS, dan JavaScript.
+DSBM adalah dashboard riset untuk melihat pola komponen UI dari design system perusahaan besar. Project ini ditujukan untuk designer, frontend engineer, dan peneliti produk yang ingin membandingkan komponen, industri, dan kecenderungan antarmuka dari banyak perusahaan dalam satu tempat.
 
-## 🚀 Fitur
+Project ini membantu menjawab pertanyaan seperti: komponen apa yang paling umum dipakai, design system mana yang bisa dibandingkan, dan bagaimana pola UI berbeda antar industri.
 
-- **Dashboard Interaktif**: Analisis komponen UI dari 75 perusahaan
-- **Dark Mode**: Toggle tema gelap/terang dengan perubahan instan
-- **Pencarian & Filter**: Cari perusahaan berdasarkan nama, design system, atau komponen
-- **Analisis Frekuensi**: Lihat komponen UI yang paling banyak digunakan
-- **Responsive Design**: Tampilan optimal di desktop dan mobile
-- **Export Data**: Download data dalam format CSV
+## Latar Belakang
 
-## 📊 Data Perusahaan
+Banyak design system perusahaan tersedia secara publik, tetapi informasinya tersebar di banyak situs dan sulit dibandingkan secara cepat. Akibatnya, proses riset komponen sering dilakukan manual: membuka dokumentasi satu per satu, mencatat komponen, lalu mencari pola yang berulang.
 
-Project ini menganalisis komponen design sistem dari 75 perusahaan ternama termasuk:
+DSBM menawarkan solusi berupa dashboard eksplorasi data. Data perusahaan, design system, industri, dan daftar komponen dikumpulkan ke dalam satu antarmuka sehingga pengguna bisa mencari, memfilter, membandingkan, dan mengekspor hasil riset dengan lebih efisien.
 
-- **Tech Giants**: Adobe (Spectrum), Google (Material Design), Microsoft (Fluent 2)
-- **E-commerce**: Amazon (Cloudscape), eBay (Evo), Shopify (Polaris)
-- **Finance**: IBM (Carbon), Salesforce (Lightning)
-- **Dan banyak lagi...**
+## Fitur Utama
 
-## 🛠️ Teknologi
+- Menjelajahi database design system dari 75 perusahaan.
+- Mencari perusahaan berdasarkan nama, design system, industri, atau komponen.
+- Memfilter komponen berdasarkan kategori agar riset lebih fokus.
+- Melihat ringkasan frekuensi komponen yang paling sering digunakan.
+- Membandingkan dua perusahaan untuk menemukan komponen yang sama dan berbeda.
+- Menggunakan dark mode dengan preferensi yang tersimpan di browser.
+- Mengekspor dataset ke format CSV untuk analisis lanjutan.
 
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Styling**: Tailwind CSS
-- **Build Tool**: Tailwind CLI
-- **Icons**: Heroicons (SVG)
-- **Hosting**: Vercel (Recommended)
+## Demo
 
-## 📁 Struktur Project
+Live demo belum tersedia. Setelah project dideploy, tambahkan tautannya di bagian ini.
 
+```text
+Demo: Belum tersedia
+Repository: https://github.com/m4sbay/dsbm
 ```
-dsbm/
-├── index.html          # Halaman utama
-├── script.js           # Logic aplikasi
-├── input.css           # Tailwind input
-├── output.css          # Compiled CSS
+
+Screenshot juga belum disertakan. Untuk dokumentasi visual, tambahkan screenshot dashboard ke folder project, misalnya:
+
+```text
+assets/screenshots/dashboard.png
+assets/screenshots/mobile.png
+```
+
+Lalu referensikan di README:
+
+```md
+![Dashboard DSBM](assets/screenshots/dashboard.png)
+```
+
+## Tech Stack
+
+| Teknologi | Alasan Penggunaan |
+| --- | --- |
+| HTML5 | Struktur aplikasi sederhana, cepat dibuka, dan mudah dideploy sebagai static site. |
+| JavaScript | Mengelola data, filter, pencarian, perbandingan, export CSV, modal, dan interaksi UI tanpa framework tambahan. |
+| Tailwind CSS | Mempercepat styling utility-first dan menjaga konsistensi responsive design. |
+| Tailwind CLI | Build CSS ringan tanpa konfigurasi bundler yang kompleks. |
+| Vercel | Cocok untuk deploy static site dengan build command sederhana. |
+
+## Struktur Project
+
+```text
+.
+├── index.html          # Struktur halaman utama dan markup UI
+├── script.js           # Data, state, rendering, interaksi, dan export CSV
+├── input.css           # Source CSS Tailwind dan custom component styles
+├── output.css          # CSS hasil build yang dipakai browser
 ├── tailwind.config.js  # Konfigurasi Tailwind
-├── package.json        # Dependencies
-└── README.md          # Dokumentasi
+├── package.json        # Script npm dan dependency
+├── vercel.json         # Konfigurasi deployment Vercel
+└── README.md           # Dokumentasi project
 ```
 
-## 🚀 Cara Menjalankan
+## Menjalankan Secara Lokal
 
-### Prerequisites
+### Prasyarat
 
-- Node.js (v14 atau lebih baru)
-- npm atau yarn
+- Node.js 14 atau lebih baru
+- npm
 
-### Installation
+### Instalasi
 
 ```bash
-# Clone repository
 git clone https://github.com/m4sbay/dsbm.git
 cd dsbm
-
-# Install dependencies
 npm install
-
-# Build CSS
-npm run build
-
-# Development dengan watch mode
-npm run build-css
 ```
 
-### Development
+### Build CSS
 
 ```bash
-# Watch mode untuk perubahan CSS
-npm run build-css
-
-# Build production
 npm run build
 ```
 
-## 📈 Analisis Data
+### Development Mode
 
-### Metode Perhitungan Frekuensi
+Jalankan Tailwind dalam mode watch agar perubahan di `input.css`, `index.html`, dan `script.js` otomatis dikompilasi ke `output.css`.
 
-```
-Frekuensi Komponen = Jumlah Perusahaan yang Menggunakan Komponen / Total Perusahaan × 100%
-```
-
-### Contoh
-
-- **Button**: 73/75 perusahaan = 97%
-- **Cards**: 72/75 perusahaan = 96%
-- **Modal**: 71/75 perusahaan = 95%
-
-## 🎨 Dark Mode
-
-Project mendukung dark mode dengan:
-
-- Toggle button di pojok kanan atas
-- Perubahan tema instan tanpa delay
-- Persistent storage menggunakan localStorage
-- Auto-detect system preference
-
-## 📱 Responsive Design
-
-- **Desktop**: Layout 4 kolom (sidebar + main content)
-- **Tablet**: Layout 2 kolom
-- **Mobile**: Layout 1 kolom dengan sidebar collapsible
-
-## 🔧 Konfigurasi
-
-### Tailwind CSS
-
-```javascript
-// tailwind.config.js
-module.exports = {
-  content: ["./index.html", "./script.js", "./*.html", "./*.js"],
-  darkMode: "class",
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
+```bash
+npm run build-css
 ```
 
-## 📊 Data Structure
+### Menjalankan Server Lokal
 
-### Perusahaan Object
+Project ini adalah static site. Setelah CSS dibuild, kamu bisa membuka `index.html` langsung di browser atau menjalankan server lokal sederhana:
 
-```javascript
+```bash
+python3 -m http.server 4173
+```
+
+Lalu buka:
+
+```text
+http://127.0.0.1:4173
+```
+
+## Cara Menggunakan Aplikasi
+
+1. Buka dashboard DSBM.
+2. Gunakan kolom pencarian untuk menemukan perusahaan, design system, atau komponen tertentu.
+3. Gunakan filter industri dan kategori komponen untuk mempersempit data.
+4. Buka mode perbandingan untuk memilih dua perusahaan dan melihat overlap komponen.
+5. Gunakan tombol export untuk mengunduh dataset dalam format CSV.
+6. Aktifkan dark mode jika ingin tampilan gelap.
+
+## Konfigurasi dan Keamanan
+
+Project ini tidak membutuhkan environment variable untuk berjalan secara lokal. Semua data saat ini berada di `script.js`.
+
+Jika di masa depan project memakai API, database, atau layanan pihak ketiga:
+
+- Jangan commit secret key, token, atau credential ke repository.
+- Simpan secret di environment variable lokal atau dashboard provider deployment.
+- Tambahkan file `.env` ke `.gitignore` jika mulai menggunakan konfigurasi lokal.
+- Gunakan `.env.example` untuk mendokumentasikan nama variable tanpa nilai rahasia.
+
+## Roadmap
+
+- Menambahkan screenshot dan live demo resmi.
+- Memindahkan dataset ke file JSON terpisah agar lebih mudah dirawat.
+- Menambahkan metadata sumber dan tanggal update untuk setiap design system.
+- Menambahkan visualisasi chart untuk tren komponen.
+- Menambahkan fitur import data baru dari format CSV atau JSON.
+- Menambahkan test ringan untuk fungsi filter, compare, dan export.
+
+## Deployment
+
+Project sudah memiliki konfigurasi `vercel.json`.
+
+```json
 {
-  id: 1,
-  name: "Adobe",
-  designSystem: "Spectrum",
-  source: "https://spectrum.adobe.com/",
-  biography: "Placeholder - Biografi perusahaan akan diisi nanti",
-  components: ["Action bar", "Action button", "Alert banner", ...],
-  industry: "tech"
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "."
 }
 ```
 
-## 🚀 Deployment
+Langkah deploy ke Vercel:
 
-### Vercel (Recommended)
+1. Push repository ke GitHub.
+2. Import repository di Vercel.
+3. Pastikan build command memakai `npm run build`.
+4. Deploy project.
 
-1. Push ke GitHub
-2. Connect ke Vercel
-3. Auto-deploy setiap push
+## Publikasi Checklist
 
-### Netlify
+- Nama dan deskripsi project sudah jelas.
+- Problem dan solusi sudah dijelaskan.
+- Fitur utama sudah dapat dipindai.
+- Tech stack dilengkapi alasan pemilihan.
+- Instruksi instalasi dan menjalankan lokal tersedia.
+- Demo atau screenshot ditambahkan.
+- Informasi keamanan, roadmap, lisensi, dan kontak tersedia.
 
-1. Drag & drop folder project
-2. Auto-deploy dengan custom domain
+## Lisensi
 
-### GitHub Pages
+Project ini menggunakan lisensi ISC sesuai konfigurasi di `package.json`.
 
-1. Push ke GitHub
-2. Enable GitHub Pages di settings
-3. Deploy dari main branch
+## Credits
 
-## 🤝 Contributing
+- Data design system dikurasi dari dokumentasi publik berbagai perusahaan.
+- Styling dibangun dengan Tailwind CSS.
+- Project dibuat dan dirawat oleh Maulana Bayu.
 
-1. Fork repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## 👨‍💻 Author
-
-**Maulana Bayu**
+## Kontak
 
 - GitHub: [@m4sbay](https://github.com/m4sbay)
-
-## 🙏 Acknowledgments
-
-- Tailwind CSS untuk styling framework
-- Heroicons untuk icon set
-- 75 perusahaan untuk data design system
-- Vercel untuk hosting platform
-
-## 📞 Contact
-
-Project Link: [https://github.com/m4sbay/dsbm](https://github.com/m4sbay/dsbm)
-
----
-
-⭐ Star repository ini jika project ini membantu Anda!
+- LinkedIn: [Maulana Bayu](https://www.linkedin.com/in/mmaulanabayu/)
+- Instagram: [@m4sbay](https://www.instagram.com/m4sbay/)
