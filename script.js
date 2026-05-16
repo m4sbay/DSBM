@@ -2703,6 +2703,7 @@ function initializeApp() {
   updateCompanyCount();
   updateDashboardStats();
   initializeCreatorModal();
+  initializeMobileNavMenu();
 }
 
 // Render tabel perusahaan
@@ -3477,10 +3478,7 @@ function initializeCreatorModal() {
   const closeCreatorModal = document.getElementById("closeCreatorModal");
 
   // Buka modal creator
-  creatorProfileBtn.addEventListener("click", function () {
-    creatorModal.classList.remove("hidden");
-    renderCreatorProfile();
-  });
+  creatorProfileBtn?.addEventListener("click", openCreatorModal);
 
   // Tutup modal creator
   closeCreatorModal.addEventListener("click", function () {
@@ -3498,6 +3496,67 @@ function initializeCreatorModal() {
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !creatorModal.classList.contains("hidden")) {
       creatorModal.classList.add("hidden");
+    }
+  });
+}
+
+function openCreatorModal() {
+  const creatorModal = document.getElementById("creatorModal");
+
+  if (!creatorModal) return;
+
+  creatorModal.classList.remove("hidden");
+  renderCreatorProfile();
+}
+
+function initializeMobileNavMenu() {
+  const mobileNavMenu = document.getElementById("mobileNavMenu");
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const mobileMenuPanel = document.getElementById("mobileMenuPanel");
+  const mobileExportButton = document.getElementById("mobileExportButton");
+  const mobileAboutButton = document.getElementById("mobileAboutButton");
+
+  if (!mobileNavMenu || !mobileMenuToggle || !mobileMenuPanel) return;
+
+  const closeMobileMenu = () => {
+    mobileMenuPanel.classList.add("hidden");
+    mobileMenuToggle.setAttribute("aria-expanded", "false");
+  };
+
+  const openMobileMenu = () => {
+    mobileMenuPanel.classList.remove("hidden");
+    mobileMenuToggle.setAttribute("aria-expanded", "true");
+  };
+
+  mobileMenuToggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+
+    if (mobileMenuPanel.classList.contains("hidden")) {
+      openMobileMenu();
+    } else {
+      closeMobileMenu();
+    }
+  });
+
+  mobileExportButton?.addEventListener("click", function () {
+    closeMobileMenu();
+    exportData();
+  });
+
+  mobileAboutButton?.addEventListener("click", function () {
+    closeMobileMenu();
+    openCreatorModal();
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!mobileNavMenu.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeMobileMenu();
     }
   });
 }

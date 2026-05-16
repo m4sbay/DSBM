@@ -11,23 +11,23 @@
     <div class="app-shell">
       <div class="app-container">
         <header class="nav-shell frosted-panel">
-          <a href="#" class="flex items-center gap-3" aria-label="DSBM home">
+          <a href="#" class="flex min-w-0 items-center gap-3" aria-label="DSBM home">
             <span class="brand-mark">DS</span>
-            <span>
-              <span class="block text-sm font-semibold text-slate-950 dark:text-white">DSBM</span>
-              <span class="block text-xs text-slate-500 dark:text-zinc-400">Design System Intelligence</span>
+            <span class="min-w-0">
+              <span class="block truncate text-sm font-semibold text-slate-950 dark:text-white">DSBM</span>
+              <span class="block truncate text-xs text-slate-500 dark:text-zinc-400">Design System Intelligence</span>
             </span>
           </a>
 
-          <div class="flex items-center gap-2 sm:gap-3">
-            <button id="exportButton" class="primary-button" type="button">
+          <div class="nav-actions">
+            <button id="exportButton" class="primary-button nav-desktop-action" type="button" aria-label="Export data">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
               </svg>
-              Export
+              <span class="export-label">Export</span>
             </button>
 
-            <button id="creatorProfileBtn" class="icon-button overflow-hidden p-0" type="button" aria-label="Buka profil creator">
+            <button id="creatorProfileBtn" class="icon-button nav-desktop-action overflow-hidden p-0" type="button" aria-label="Buka profil creator">
               <img src="./index.png" alt="Creator Profile" class="h-full w-full object-cover" />
             </button>
 
@@ -44,6 +44,32 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" />
               </svg>
             </button>
+
+            <div id="mobileNavMenu" class="mobile-nav-menu">
+              <button id="mobileMenuToggle" class="icon-button" type="button" aria-label="Buka menu" aria-haspopup="menu" aria-expanded="false">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              </button>
+
+              <div id="mobileMenuPanel" class="mobile-menu-panel hidden" role="menu" aria-labelledby="mobileMenuToggle">
+                <button id="mobileExportButton" class="mobile-menu-item" type="button" role="menuitem">
+                  <span class="mobile-menu-icon">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                    </svg>
+                  </span>
+                  <span>Export</span>
+                </button>
+
+                <button id="mobileAboutButton" class="mobile-menu-item" type="button" role="menuitem">
+                  <span class="mobile-menu-icon overflow-hidden p-0">
+                    <img src="./index.png" alt="" class="h-full w-full object-cover" />
+                  </span>
+                  <span>About</span>
+                </button>
+              </div>
+            </div>
           </div>
         </header>
 
