@@ -16,7 +16,13 @@
     --radius-surface: 24px;
     --radius-control: 16px;
     --radius-pill: 999px;
-    --footer-height: clamp(360px, 42vh, 520px);
+    --footer-height: clamp(460px, 58vh, 560px);
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --footer-height: clamp(360px, 42vh, 520px);
+    }
   }
 
   .dark {
@@ -216,8 +222,12 @@
   }
 
   .site-footer-links a {
-    @apply inline-flex h-10 items-center border border-white/15 bg-white/10 px-4 text-sm font-semibold text-white/80 transition duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-slate-950;
+    @apply inline-flex h-11 w-11 items-center justify-center border border-white/15 bg-white/10 text-white/80 transition duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-slate-950;
     border-radius: var(--radius-pill);
+  }
+
+  .site-footer-links svg {
+    @apply h-5 w-5;
   }
 
   .site-footer-meta {

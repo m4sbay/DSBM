@@ -457,7 +457,13 @@ video {
   --radius-surface: 24px;
   --radius-control: 16px;
   --radius-pill: 999px;
-  --footer-height: clamp(360px, 42vh, 520px);
+  --footer-height: clamp(460px, 58vh, 560px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --footer-height: clamp(360px, 42vh, 520px);
+  }
 }
 
 .dark {
@@ -845,16 +851,13 @@ body::after {
 
 .site-footer-links a {
   display: inline-flex;
-  height: 2.5rem;
+  height: 2.75rem;
+  width: 2.75rem;
   align-items: center;
+  justify-content: center;
   border-width: 1px;
   border-color: rgb(255 255 255 / 0.15);
   background-color: rgb(255 255 255 / 0.1);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 600;
   color: rgb(255 255 255 / 0.8);
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -874,6 +877,11 @@ body::after {
 
 .site-footer-links a {
   border-radius: var(--radius-pill);
+}
+
+.site-footer-links svg {
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
 .site-footer-meta {
