@@ -29,18 +29,9 @@ Demo: Belum tersedia
 Repository: https://github.com/m4sbay/dsbm
 ```
 
-Screenshot juga belum disertakan. Untuk dokumentasi visual, tambahkan screenshot dashboard ke folder project, misalnya:
+Screenshot dashboard:
 
-```text
-assets/screenshots/dashboard.png
-assets/screenshots/mobile.png
-```
-
-Lalu referensikan di README:
-
-```md
 ![Dashboard DSBM](assets/screenshots/dashboard.png)
-```
 
 ## Tech Stack
 
